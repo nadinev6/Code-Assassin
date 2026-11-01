@@ -1,0 +1,14 @@
+[general]
+model = "qwen2.5-coder:3b"
+ollama_url = "http://127.0.0.1:11434"
+num_ctx = 8192
+num_predict = 1024
+temperature = 0.2
+voice = "en_GB-alan-medium"
+voice_dir = ".tools/voices"
+speak = true
+edits = true
+max_turns = 6
+
+[paths]
+root = "."

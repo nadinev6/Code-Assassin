@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.12"]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install uv
+      run: pip install uv
+    
+    - name: Sync dependencies
+      run: uv sync
+    
+    - name: Run linting
+      run: uv run ruff check .
+    
+    - name: Run unit tests
+      run: uv run pytest -q
+    
+    - name: Run integration tests (if enabled)
+      run: CODE_ASSASSIN_INTEGRATION=1 uv run pytest tests/test_integration.py -v
+      continue-on-error: true
+
+  # Optional: Run on specific schedule
+  schedule:
+  - cron: '0 2 * * *'  # Daily at 2 AM UTC
