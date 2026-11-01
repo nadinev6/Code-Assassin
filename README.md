@@ -18,14 +18,13 @@ Terminal voice-driven coding assistant powered by local Qwen 2.5 Coder 3B and Pi
 
 ```mermaid
 graph TD
-    A[stdin / prompt_toolkit] --> B[CLI controller]
-    B --> C[context builder]
-    C --> D[Ollama /api/chat (GPU)]
-    D --> E[Streaming token parser]
-    E --> F[<speak> queue] --> G[Piper worker (CPU)]
-    E --> H[<detail> stream] --> I[Rich terminal]
-    I --> J[Editor + backups]
-    B --> K[.code-assassin/memory_<task>.json]
+    A[CLI] --> B[Context]
+    B --> D[Ollama]
+    D --> E[Parser]
+    E --> F[Piper]
+    E --> H[Terminal]
+    I[Editor] --> J[Backups]
+    B --> K[Memory]
 ```
 
 ## Quickstart
