@@ -21,10 +21,10 @@ graph TD
     A[stdin / prompt_toolkit] --> B[CLI controller]
     B --> C[context builder]
     C --> D[Ollama /api/chat (GPU)]
-    D --> E[streaming token parser]
+    D --> E[Streaming token parser]
     E --> F[<speak> queue] --> G[Piper worker (CPU)]
     E --> H[<detail> stream] --> I[Rich terminal]
-    I --> J[editor + backups]
+    I --> J[Editor + backups]
     B --> K[.code-assassin/memory_<task>.json]
 ```
 

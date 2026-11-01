@@ -1,15 +1,5 @@
-import argparse
+"""CLI interface with interactive loop and commands."""
 
-def status():
-    print(f"Task: {task}")
-    print(f"Model: {model}")
-    print(f"Agent on: {agent_on}")
-    print(f"Editor on: {editor_on}")
-    print(f"Voice on: {voice_on}")
-    print(f"Turns: {turns}")
-"""
-CLI interface with interactive loop and commands.
-"""
 import asyncio
 from pathlib import Path
 from typing import Optional
@@ -308,6 +298,13 @@ class AssassinApp:
         elif cmd == "undo":
             success = self.editor.undo(self.current_task)
             self.ui.print_status("Undo last edit" if success else "No edits to undo")
+        elif cmd == "status":
+            self.ui.print_status(f"Task: {self.current_task}")
+            self.ui.print_status(f"Model: {self.config.model}")
+            self.ui.print_status(f"Agent: {'disabled' if self.no_agent else 'enabled'}")
+            self.ui.print_status(f"Editor: {'on' if self.editor.edits_enabled else 'off'}")
+            self.ui.print_status(f"Voice: {'on' if self.tts.enabled else 'off'}")
+            self.ui.print_status(f"Turns: {len(self.session.turns)}")
         elif cmd == "clear":
             self.session.clear()
             self.ui.print_status("Conversation cleared")
